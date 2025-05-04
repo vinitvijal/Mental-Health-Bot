@@ -1,0 +1,47 @@
+<!-- templates/home.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mental Health Bot</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fef9f9;
+            text-align: center;
+            padding: 100px 20px;
+            color: #444;
+        }
+        h1 {
+            font-size: 3em;
+            color: #ff77aa;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .start-btn {
+            background-color: #ffaad4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+        .start-btn:hover {
+            background-color: #ff88bb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Your Calm Companion 💖</h1>
+    <p>Your mental health matters. Let’s talk.</p>
+    <a href="chat" class="start-btn">Start Chat</a>
+</body>
+</html>

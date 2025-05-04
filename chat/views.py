@@ -42,3 +42,6 @@ from django.shortcuts import render
 
 def chat_page(request):
     return render(request, "chat.html")
+
+def home(request):
+    return render(request, 'home.html')
