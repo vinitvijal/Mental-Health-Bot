@@ -10,26 +10,54 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @csrf_exempt
+# def chat_with_bot(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         user_message = data.get('message', '')
+
+#         try:
+#             response = client.chat.completions.create(
+#                 model="gpt-4o-mini",
+#                 messages=[
+#                     {"role": "system", "content": "You are a friendly mental health assistant. Be kind, gentle, and helpful."},
+#                     {"role": "user", "content": user_message}
+#                 ]
+#             )
+
+#             reply = response.choices[0].message.content
+#             return JsonResponse({'response': reply})
+
+#         except Exception as e:
+#             return JsonResponse({'response': str(e)}, status=500)
+
+
 def chat_with_bot(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         user_message = data.get('message', '')
 
+        if 'chat_history' not in request.session:
+            request.session['chat_history'] = [
+                {"role": "system", "content": "You are a friendly mental health assistant. Be kind, gentle, and helpful."}
+            ]
+
+        # Add user's message to history
+        request.session['chat_history'].append({"role": "user", "content": user_message})
+
         try:
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are a friendly mental health assistant. Be kind, gentle, and helpful."},
-                    {"role": "user", "content": user_message}
-                ]
+                messages=request.session['chat_history']
             )
 
-            reply = response.choices[0].message.content
-            return JsonResponse({'response': reply})
+            reply = response.choices[0].message.content.strip()
 
+            request.session['chat_history'].append({"role": "assistant", "content": reply})
+            request.session.modified = True 
+
+            return JsonResponse({'response': reply})
         except Exception as e:
             return JsonResponse({'response': str(e)}, status=500)
-
 
 
 from django.shortcuts import render
