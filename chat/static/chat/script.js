@@ -9,10 +9,11 @@ suggestions.forEach(btn => btn.onclick = () => {
   sendMessage();
 });
 
+
 function appendMessage(content, sender) {
   const msg = document.createElement("div");
   msg.className = "message " + sender;
-  msg.textContent = content;
+  msg.innerHTML =  marked.parse(content);
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
