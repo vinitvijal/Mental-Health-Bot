@@ -27,7 +27,7 @@ function sendMessage() {
 
   appendMessage("Typing...", "bot");
 
-  fetch("/api/chat/", {
+  fetch("/chat/api/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message })
